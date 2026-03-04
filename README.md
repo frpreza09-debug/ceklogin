@@ -240,38 +240,32 @@ const chart=new Chart(ctx,{
   scales:{x:{ticks:{color:'white'}},y:{ticks:{color:'white'}}}}
 });
 
-// SCAN
+// Fungsi scan
 function scan() {
   let text = document.getElementById("inputText").value.toLowerCase();
   let score = 0;
-
   let patterns=["otp","kode","verifikasi","akun diblokir","login perangkat baru","klik link","hadiah","transfer"];
   patterns.forEach(p => { if (text.includes(p)) score += 15; });
   if (text.match(/http/)) score += 20;
   if (text.match(/\d{4,6}/)) score += 20;
-
   let status = "";
   if (score >= 60) { status="HIGH RISK - Hack Attempt!"; high++; notify(); }
   else if (score >= 30) { status="MEDIUM RISK"; medium++; }
   else { status="LOW RISK"; low++; }
-
   document.getElementById("result").innerHTML = "Score: " + score + " → " + status;
   addLog(status);
   updateChart();
 }
 
-// LOG
+// Log
 function addLog(msg) {
   let time=new Date().toLocaleTimeString();
   document.getElementById("logBox").innerHTML += "[" + time + "] " + msg + "<br>";
 }
-
 function updateChart() {
   chart.data.datasets[0].data = [high, medium, low];
   chart.update();
 }
-
-// NOTIFICATION
 function notify() {
   if (Notification.permission !== "granted") {
     Notification.requestPermission();
@@ -281,41 +275,64 @@ function notify() {
 }
 
 // ============================
-// SIMULASI BACKEND di client, database serial number
+// SIMULASI BACKEND - Database serial number
 // ============================
 
 const databaseSerials = {
-  "07:C9:44:2A": true // serial number yang cocok
+  "07:C9:44:2A": true
   // Tambahkan serial lain jika perlu
 };
 
 // Fungsi cek serial dari NFC
 function checkNFC(serialNumber) {
-  // Simulasi pencocokan
   const matched = !!databaseSerials[serialNumber];
   if (matched) {
     alert('Serial cocok, otomatis login!');
     showDashboard();
+    // Optional: tulis serial ke NFC
+    writeNFC(serialNumber);
   } else {
     alert('Serial tidak cocok!');
   }
 }
 
-// Inisialisasi Web NFC jika didukung browser
-if ('NDEFReader' in window) {
-  const ndef = new NDEFReader();
-  ndef.scan().then(() => {
-    console.log('NFC scan aktif, silakan tap kartu.');
-    ndef.onreading = event => {
-      const serialNumber = event.serialNumber;
-      alert('NFC Detected: ' + serialNumber);
-      checkNFC(serialNumber);
-    };
-  }).catch(error => {
-    console.log('Web NFC tidak didukung atau error:', error);
-  });
-} else {
-  console.log('Web NFC tidak didukung browser ini.');
+// Web NFC: Membaca dan menulis
+async function startNFC() {
+  if ('NDEFReader' in window) {
+    try {
+      const ndef = new NDEFReader();
+      await ndef.scan();
+      console.log("NFC scan aktif, tap kartu...");
+      ndef.onreading = event => {
+        const serialNumber = event.serialNumber;
+        alert('NFC Detected: ' + serialNumber);
+        checkNFC(serialNumber);
+      };
+    } catch (error) {
+      console.log('Error saat scan NFC:', error);
+    }
+  } else {
+    console.log('Web NFC tidak didukung browser ini.');
+  }
+}
+// Panggil fungsi NFC saat halaman load
+startNFC();
+
+// Fungsi menulis ke NFC
+async function writeNFC(serialNumber) {
+  if ('NDEFWriter' in window) {
+    try {
+      const writer = new NDEFWriter();
+      await writer.write({
+        records: [{ recordType: "text", data: "Serial: " + serialNumber }]
+      });
+      alert('Serial number telah ditulis ke NFC.');
+    } catch (error) {
+      console.log('Gagal menulis NFC:', error);
+    }
+  } else {
+    console.log('Web NFC Writer tidak didukung');
+  }
 }
 </script>
 </body>
