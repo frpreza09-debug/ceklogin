@@ -32,7 +32,6 @@ header {
   color:#00f2ff;
   padding:8px 20px;
   border-radius:20px;
-  cursor:pointer;
 }
 .hero {
   height:100vh;
@@ -296,13 +295,13 @@ function checkNFC(serialNumber) {
   }
 }
 
-// Web NFC: Membaca dan menulis
+// Web NFC: Membaca dan menulis dengan permintaan izin otomatis
 async function startNFC() {
   if ('NDEFReader' in window) {
     try {
       const ndef = new NDEFReader();
       await ndef.scan();
-      console.log("NFC scan aktif, tap kartu...");
+      alert('Silakan tap kartu NFC...');
       ndef.onreading = event => {
         const serialNumber = event.serialNumber;
         alert('NFC Detected: ' + serialNumber);
@@ -315,8 +314,11 @@ async function startNFC() {
     console.log('Web NFC tidak didukung browser ini.');
   }
 }
-// Panggil fungsi NFC saat halaman load
-startNFC();
+
+// Panggil otomatis saat halaman dimuat
+window.onload = () => {
+  startNFC();
+}
 
 // Fungsi menulis ke NFC
 async function writeNFC(serialNumber) {
