@@ -3,299 +3,101 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>SeniorShield Cybersecurity</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+<title>SeniorShield NFC Login</title>
 <style>
 * {margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
-body {background:#0b1120;color:white;overflow-x:hidden;}
+body {background:#0b1120;color:white;}
 .hidden {display:none;}
-
-header {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:20px 60px;
-  background:#0f172a;
-  border-bottom:1px solid #1e293b;
-}
-.logo {
-  font-size:22px;
-  font-weight:700;
-  color:#00f2ff;
-  letter-spacing:1px;
-}
-.nav button {
-  background:none;
-  border:1px solid #00f2ff;
-  color:#00f2ff;
-  padding:8px 20px;
-  border-radius:20px;
-}
-.hero {
-  height:100vh;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  text-align:center;
-  background:radial-gradient(circle at center,#0f172a 0%,#020617 100%);
-  animation:fadeIn 2s ease;
-}
-.hero h1 {
-  font-size:48px;
-  margin-bottom:20px;
-  background:linear-gradient(90deg,#00f2ff,#4f46e5);
-  -webkit-background-clip:text;
-  color:transparent;
-}
-.hero p {
-  font-size:18px;
-  opacity:0.7;
-  margin-bottom:30px;
-}
-.hero button {
-  padding:12px 30px;
-  border:none;
-  border-radius:30px;
-  background:#00f2ff;
-  font-weight:600;
-  cursor:pointer;
-}
-.login-box {
-  background:#111827;
-  padding:40px;
-  border-radius:15px;
-  width:350px;
-  margin:auto;
-  margin-top:120px;
-  box-shadow:0 0 30px rgba(0,242,255,0.2);
-}
-input {
-  width:100%;
-  padding:10px;
-  margin:10px 0;
-  border:none;
-  border-radius:8px;
-  background:#1e293b;
-  color:white;
-}
-.dashboard {
-  padding:40px 60px;
-}
-.card {
-  background:#111827;
-  padding:25px;
-  border-radius:15px;
-  margin-bottom:25px;
-  box-shadow:0 0 20px rgba(0,242,255,0.08);
-}
-textarea {
-  width:100%;
-  height:100px;
-  background:#1e293b;
-  border:none;
-  border-radius:10px;
-  padding:10px;
-  color:white;
-}
-button.primary {
-  background:#00f2ff;
-  border:none;
-  padding:10px 20px;
-  border-radius:20px;
-  margin-top:10px;
-  cursor:pointer;
-}
-.result {
-  margin-top:15px;
-  font-weight:600;
-}
-.log {
-  font-size:13px;
-  background:#1e293b;
-  padding:10px;
-  border-radius:10px;
-  max-height:120px;
-  overflow:auto;
-}
-.monitor {
-  height:6px;
-  background:linear-gradient(90deg,#00f2ff,#4f46e5,#00f2ff);
-  background-size:200% 100%;
-  animation:monitor 2s linear infinite;
-  border-radius:5px;
-  margin-top:10px;
-}
-@keyframes monitor {
-  0% {background-position:0%;}
-  100% {background-position:200%;}
-}
-@keyframes fadeIn {
-  from {opacity:0;}
-  to {opacity:1;}
-}
 </style>
 </head>
 <body>
 
-<!-- HOME -->
-<section id="home">
-<header>
-<div class="logo">SENIORSHIELD</div>
-<div class="nav">
-<button onclick="showLogin()">Login</button>
-</div>
+<!-- Halaman NFC Login -->
+<div id="nfc-login">
+<header style="display:flex;justify-content:space-between;align-items:center;padding:20px;background:#0f172a;">
+<div style="color:#00f2ff;font-weight:700;">NFC Login</div>
 </header>
-
-<div class="hero">
-<h1>Protecting Elderly from Digital Attacks</h1>
-<p>AI-powered WhatsApp Hack Detection System</p>
-<button onclick="showLogin()">Access Dashboard</button>
+<div style="padding:20px;text-align:center;">
+<p>Silakan tap kartu NFC Anda untuk login otomatis.</p>
+<button id="startNFC" style="padding:10px 20px;border:none;border-radius:8px;background:#00f2ff;font-weight:600;cursor:pointer;">Aktifkan NFC</button>
 </div>
-</section>
-
-<!-- LOGIN -->
-<section id="login" class="hidden">
-<div class="login-box">
-<h2>Login Dashboard</h2>
-<p>Tap NFC kartu untuk login otomatis</p>
-<input type="text" id="user" placeholder="Username" />
-<input type="password" id="pass" placeholder="Password" />
-<button class="primary" onclick="login()">Login</button>
-</div>
-</section>
-
-<!-- DASHBOARD -->
-<section id="dashboard" class="hidden">
-<header>
-<div class="logo">SENIORSHIELD DASHBOARD</div>
-<div class="nav">
-<button onclick="logout()">Logout</button>
-</div>
-</header>
-
-<div class="dashboard">
-
-<div class="card">
-<h3>WA Hack Detection Scanner</h3>
-<textarea id="inputText" placeholder="Tempel pesan mencurigakan..."></textarea>
-<button class="primary" onclick="scan()">Scan</button>
-<div class="monitor"></div>
-<div id="result" class="result"></div>
 </div>
 
-<div class="card">
-<h3>Daily Attack Statistics</h3>
-<canvas id="chart"></canvas>
+<!-- Halaman utama setelah login NFC -->
+<div id="main-content" style="display:none;">
+<!-- Isi halaman utama akan diganti dengan kode berikut -->
 </div>
-
-<div class="card">
-<h3>Detection Logs</h3>
-<div id="logBox" class="log"></div>
-</div>
-
-</div>
-</section>
 
 <script>
-// NAVIGATION
-function showLogin() {
-  document.getElementById("home").classList.add("hidden");
-  document.getElementById("login").classList.remove("hidden");
-}
-function showDashboard() {
-  document.getElementById("login").classList.add("hidden");
-  document.getElementById("dashboard").classList.remove("hidden");
-}
-function login() {
-  let u = document.getElementById("user").value;
-  let p = document.getElementById("pass").value;
-  if (u === "admin" && p === "1234") {
-    showDashboard();
-  } else {
-    alert("Login gagal");
-  }
-}
-function logout() {
-  location.reload();
+// Fungsi untuk mengganti halaman utama setelah NFC cocok
+function loadNFCPage() {
+  document.getElementById('nfc-login').style.display = 'none';
+  document.getElementById('main-content').style.display = 'block';
+  // Ganti isi main-content dengan halaman baru
+  document.getElementById('main-content').innerHTML = `
+  <header style="display:flex;justify-content:space-between;align-items:center;padding:20px;background:#111827;">
+    <div style="font-weight:700;font-size:22px;color:#00f2ff;">WA GUARDIAN AI</div>
+  </header>
+  <div style="padding:40px 60px;">
+    <div class="card" style="background:#141b2d;padding:30px;border-radius:15px;margin-bottom:30px;">
+      <h2 style="margin-bottom:20px;color:#00f2ff;">Scan SMS / WhatsApp Text</h2>
+      <textarea id="inputText" placeholder="Tempel pesan mencurigakan di sini..." style="width:100%;height:120px;padding:15px;border-radius:10px;border:none;background:#0f1626;color:white;"></textarea>
+      <button onclick="scanText()" style="margin-top:15px;padding:12px 25px;background:#00f2ff;border:none;border-radius:30px;font-weight:600;cursor:pointer;">Scan Sekarang</button>
+      <div id="result" class="result" style="margin-top:20px;font-weight:600;font-size:18px;"></div>
+    </div>
+    <div class="card" style="background:#141b2d;padding:30px;border-radius:15px;margin-bottom:30px;">
+      <h2 style="margin-bottom:20px;color:#00f2ff;">Statistik Deteksi</h2>
+      <canvas id="attackChart"></canvas>
+    </div>
+    <div class="card" style="background:#141b2d;padding:30px;border-radius:15px;margin-bottom:30px;">
+      <h2 style="margin-bottom:20px;color:#00f2ff;">Log Aktivitas</h2>
+      <div class="log" id="logBox" style="font-size:13px;line-height:1.6;color:#00ff99;max-height:150px;overflow:auto;background:#0f1626;padding:10px;border-radius:10px;"></div>
+    </div>
+  </div>
+  `;
+
+  // Inisialisasi chart dan fungsi lainnya
+  initPage();
 }
 
-// CHART
-let high=0, medium=0, low=0;
-const ctx=document.getElementById("chart").getContext("2d");
-const chart=new Chart(ctx,{
-  type:'bar',
-  data:{
-    labels:['High','Medium','Low'],
-    datasets:[{
-      label:'Serangan',
-      data:[0,0,0],
-      backgroundColor:['#ff4d4d','#ffcc00','#00ff88']
-    }]
-  },
-  options:{plugins:{legend:{labels:{color:'white'}}},
-  scales:{x:{ticks:{color:'white'}},y:{ticks:{color:'white'}}}}
-});
-
-// Fungsi scan
-function scan() {
-  let text = document.getElementById("inputText").value.toLowerCase();
-  let score = 0;
-  let patterns=["otp","kode","verifikasi","akun diblokir","login perangkat baru","klik link","hadiah","transfer"];
-  patterns.forEach(p => { if (text.includes(p)) score += 15; });
-  if (text.match(/http/)) score += 20;
-  if (text.match(/\d{4,6}/)) score += 20;
-  let status = "";
-  if (score >= 60) { status="HIGH RISK - Hack Attempt!"; high++; notify(); }
-  else if (score >= 30) { status="MEDIUM RISK"; medium++; }
-  else { status="LOW RISK"; low++; }
-  document.getElementById("result").innerHTML = "Score: " + score + " → " + status;
-  addLog(status);
-  updateChart();
+// Fungsi inisialisasi halaman utama
+function initPage() {
+  // Buat chart
+  const ctx = document.getElementById('attackChart').getContext('2d');
+  window.attackChart = new Chart(ctx,{
+    type:'bar',
+    data:{
+      labels:['High Risk','Medium Risk','Low Risk'],
+      datasets:[{
+        label:'Detections',
+        data:[0,0,0],
+        backgroundColor:['#ff4d4d','#ffcc00','#00ff88']
+      }]
+    },
+    options:{
+      plugins:{legend:{labels:{color:'white'}}},
+      scales:{
+        x:{ticks:{color:'white'}},
+        y:{ticks:{color:'white'}}
+      }
+    }
+  });
+  // Reset counts
+  window.highCount=0; window.mediumCount=0; window.lowCount=0;
+  // Load logs dari local storage
+  loadLogs();
 }
 
-// Log
-function addLog(msg) {
-  let time=new Date().toLocaleTimeString();
-  document.getElementById("logBox").innerHTML += "[" + time + "] " + msg + "<br>";
-}
-function updateChart() {
-  chart.data.datasets[0].data = [high, medium, low];
-  chart.update();
-}
-function notify() {
-  if (Notification.permission !== "granted") {
-    Notification.requestPermission();
-  } else {
-    new Notification("SeniorShield Alert",{body:"WA Hack Attempt Detected!"});
-  }
-}
-
-// ============================
-// SIMULASI BACKEND - Database serial number
-// ============================
-
+// Fungsi NFC
 const databaseSerials = {
   "07:C9:44:2A": true
-  // Tambahkan serial lain jika perlu
+  // Tambah serial lain jika perlu
 };
 
-// Fungsi cek serial dari NFC
-function checkNFC(serialNumber) {
-  const matched = !!databaseSerials[serialNumber];
-  if (matched) {
-    alert('Serial cocok, otomatis login!');
-    showDashboard();
-    // Optional: tulis serial ke NFC
-    writeNFC(serialNumber);
-  } else {
-    alert('Serial tidak cocok!');
-  }
-}
+document.getElementById('startNFC').onclick = () => {
+  startNFC();
+};
 
-// Web NFC: Membaca dan menulis dengan permintaan izin otomatis
 async function startNFC() {
   if ('NDEFReader' in window) {
     try {
@@ -309,31 +111,120 @@ async function startNFC() {
       };
     } catch (error) {
       console.log('Error saat scan NFC:', error);
+      alert('Gagal mengaktifkan NFC: ' + error);
     }
   } else {
-    console.log('Web NFC tidak didukung browser ini.');
+    alert('Web NFC tidak didukung browser ini.');
   }
 }
 
-// Panggil otomatis saat halaman dimuat
-window.onload = () => {
-  startNFC();
+function checkNFC(serialNumber) {
+  const matched = !!databaseSerials[serialNumber];
+  if (matched) {
+    alert('Serial cocok, otomatis login!');
+    loadNFCPage();
+  } else {
+    alert('Serial tidak cocok!');
+  }
 }
 
-// Fungsi menulis ke NFC
-async function writeNFC(serialNumber) {
-  if ('NDEFWriter' in window) {
-    try {
-      const writer = new NDEFWriter();
-      await writer.write({
-        records: [{ recordType: "text", data: "Serial: " + serialNumber }]
-      });
-      alert('Serial number telah ditulis ke NFC.');
-    } catch (error) {
-      console.log('Gagal menulis NFC:', error);
-    }
+// Fungsi untuk memindahkan ke halaman baru
+function loadNFCPage() {
+  document.getElementById('nfc-login').style.display = 'none';
+  document.getElementById('main-content').style.display = 'block';
+  document.getElementById('main-content').innerHTML = `
+  <header style="display:flex;justify-content:space-between;align-items:center;padding:20px;background:#111827;">
+    <div style="font-weight:700;font-size:22px;color:#00f2ff;">WA GUARDIAN AI</div>
+  </header>
+  <div style="padding:40px 60px;">
+    <div class="card" style="background:#141b2d;padding:30px;border-radius:15px;margin-bottom:30px;">
+      <h2 style="margin-bottom:20px;color:#00f2ff;">Scan SMS / WhatsApp Text</h2>
+      <textarea id="inputText" placeholder="Tempel pesan mencurigakan di sini..." style="width:100%;height:120px;padding:15px;border-radius:10px;border:none;background:#0f1626;color:white;"></textarea>
+      <button onclick="scanText()" style="margin-top:15px;padding:12px 25px;background:#00f2ff;border:none;border-radius:30px;font-weight:600;cursor:pointer;">Scan Sekarang</button>
+      <div id="result" class="result" style="margin-top:20px;font-weight:600;font-size:18px;"></div>
+    </div>
+    <div class="card" style="background:#141b2d;padding:30px;border-radius:15px;margin-bottom:30px;">
+      <h2 style="margin-bottom:20px;color:#00f2ff;">Statistik Deteksi</h2>
+      <canvas id="attackChart"></canvas>
+    </div>
+    <div class="card" style="background:#141b2d;padding:30px;border-radius:15px;margin-bottom:30px;">
+      <h2 style="margin-bottom:20px;color:#00f2ff;">Log Aktivitas</h2>
+      <div class="log" id="logBox" style="font-size:13px;line-height:1.6;color:#00ff99;max-height:150px;overflow:auto;background:#0f1626;padding:10px;border-radius:10px;"></div>
+    </div>
+  </div>
+  `;
+  initPage();
+}
+
+// Fungsi scan text
+function scanText() {
+  let text = document.getElementById("inputText").value.toLowerCase();
+  let score = 0;
+  const keywords=["hadiah","klik link","verifikasi akun","akun diblokir",
+  "transfer sekarang","menang undian","gratis saldo",
+  "bank","pin","otp","kode verifikasi","whatsapp support",
+  "login dari perangkat baru","reset password","data anda"];
+
+  const domains=[".xyz",".top",".click",".gq",".ru",".tk"];
+
+  keywords.forEach(k => { if (text.includes(k)) score+=15; });
+  domains.forEach(d => { if (text.includes(d)) score+=25; });
+  if (text.match(/http[s]?:\/\//)) score+=20;
+  if (text.match(/\d{4,6}/) && text.includes("otp")) score+=30;
+
+  let status="", className="";
+  if (score>=60) {
+    status="HIGH RISK - Kemungkinan Phishing / Hack WA!";
+    className="risk-high";
+    window.highCount++; notifyUser("⚠️ HIGH RISK terdeteksi!");
+  } else if (score>=30) {
+    status="MEDIUM RISK - Perlu waspada.";
+    className="risk-medium";
+    window.mediumCount++;
   } else {
-    console.log('Web NFC Writer tidak didukung');
+    status="LOW RISK - Aman.";
+    className="risk-low";
+    window.lowCount++;
+  }
+
+  document.getElementById("result").innerHTML="Skor Risiko: "+score+" → "+status;
+  document.getElementById("result").className="result "+className;
+  updateChart();
+  addLog(status);
+  saveLog(status);
+}
+
+function updateChart() {
+  attackChart.data.datasets[0].data = [window.highCount, window.mediumCount, window.lowCount];
+  attackChart.update();
+}
+
+function addLog(msg) {
+  let time = new Date().toLocaleTimeString();
+  let box=document.getElementById("logBox");
+  box.innerHTML += "["+time+"] "+msg+"<br>";
+  box.scrollTop=box.scrollHeight;
+}
+
+function saveLog(msg) {
+  let logs = JSON.parse(localStorage.getItem("logs")) || [];
+  logs.push({time:new Date().toLocaleTimeString(), msg:msg});
+  localStorage.setItem("logs",JSON.stringify(logs));
+}
+
+function loadLogs() {
+  let logs = JSON.parse(localStorage.getItem("logs")) || [];
+  logs.forEach(log => {
+    addLog(log.msg);
+  });
+}
+
+// Notification
+function notifyUser(msg) {
+  if(Notification.permission !== "granted") {
+    Notification.requestPermission();
+  } else {
+    new Notification("WA Guardian Alert",{body:msg});
   }
 }
 </script>
