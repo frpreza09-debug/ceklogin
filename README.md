@@ -632,7 +632,7 @@ body{
 <script>
 /* ── DATABASES ── */
 const NFC_DB=[
-  {uid:"04:a3:b2:c1",name:"Admin Utama"},
+  {uid:"07:C9:44:2A",name:"Admin Utama"},
   {uid:"04:12:34:56",name:"Staff Senior 1"},
   {uid:"04:ab:cd:ef",name:"Staff Senior 2"},
 ];
