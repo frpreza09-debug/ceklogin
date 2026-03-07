@@ -20,11 +20,12 @@
 @media(min-width:1280px){:root{--px:96px;}}
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;overflow-x:hidden;-webkit-tap-highlight-color:transparent;}
+body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;overflow-x:clip;-webkit-tap-highlight-color:transparent;}
+#root-clip{max-width:100vw;overflow-x:clip;}
 .hidden{display:none!important;}
 
 /* ═══════════ SHARED HEADER ═══════════ */
-.site-header{display:flex;justify-content:space-between;align-items:center;padding:14px var(--px);background:rgba(8,14,28,.96);border-bottom:1px solid rgba(0,242,255,.1);position:sticky;top:0;z-index:400;backdrop-filter:blur(12px);}
+.site-header{display:flex;justify-content:space-between;align-items:center;padding:14px var(--px);background:#080e1c;border-bottom:1px solid rgba(0,242,255,.1);position:sticky;top:0;z-index:400;}
 .logo{font-size:clamp(14px,4.5vw,20px);font-weight:800;color:var(--cyan);letter-spacing:2px;font-family:'Syne',sans-serif;flex:1;min-width:0;}
 .nav-btn{background:none;border:1.5px solid var(--cyan);color:var(--cyan);padding:7px 18px;border-radius:20px;cursor:pointer;font-family:'Poppins',sans-serif;font-weight:600;font-size:13px;transition:.2s;white-space:nowrap;min-height:38px;}
 .nav-btn:hover{background:var(--cyan);color:#080e1c;}
@@ -75,7 +76,7 @@ body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;ove
 
 /* ═══════════ DASHBOARD ═══════════ */
 #dashboard{display:flex;flex-direction:column;min-height:100svh;animation:fadeUp .4s ease;}
-.dash-header{display:flex;justify-content:space-between;align-items:center;padding:0 var(--px);background:rgba(15,25,41,.97);height:56px;border-bottom:1px solid rgba(0,242,255,.08);position:sticky;top:0;z-index:400;gap:10px;flex-shrink:0;backdrop-filter:blur(12px);}
+.dash-header{display:flex;justify-content:space-between;align-items:center;padding:0 var(--px);background:#0d1829;height:56px;border-bottom:1px solid rgba(0,242,255,.08);position:sticky;top:0;z-index:400;gap:10px;flex-shrink:0;}
 .dash-logo{font-weight:800;color:var(--cyan);font-family:'Syne',sans-serif;font-size:clamp(10px,2.8vw,15px);display:flex;align-items:center;gap:8px;min-width:0;flex:1;letter-spacing:.3px;}
 .dash-right{display:flex;align-items:center;gap:7px;flex-shrink:0;}
 .dash-btn{background:none;border:1.5px solid rgba(0,242,255,.4);color:var(--cyan);padding:6px 12px;border-radius:16px;cursor:pointer;font-family:'Poppins',sans-serif;font-weight:600;font-size:12px;transition:.2s;white-space:nowrap;min-height:34px;}
@@ -83,21 +84,33 @@ body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;ove
 .dash-body{flex:1;overflow-y:auto;padding:var(--gap) var(--px) calc(var(--gap) + env(safe-area-inset-bottom));}
 
 /* ═══════════ CONNECTION BAR ═══════════ */
-.conn-bar{display:flex;align-items:center;justify-content:space-between;background:var(--deep);border:1px solid rgba(0,242,255,.12);border-radius:var(--r);padding:11px 16px;margin-bottom:var(--gap);gap:10px;flex-wrap:wrap;}
-.conn-left{display:flex;align-items:center;gap:10px;flex:1;min-width:0;}
+.conn-bar{background:var(--deep);border:1px solid rgba(0,242,255,.12);border-radius:var(--r);padding:12px 14px;margin-bottom:var(--gap);}
+/* Baris 1: status */
+.conn-top{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
 .conn-dot{width:9px;height:9px;border-radius:50%;background:#333;flex-shrink:0;transition:.4s;}
 .conn-dot.connecting{background:var(--warn);animation:blink 1s infinite;}
 .conn-dot.connected{background:var(--ok);box-shadow:0 0 8px var(--ok);animation:blink 2s infinite;}
 .conn-dot.error{background:var(--danger);box-shadow:0 0 6px var(--danger);}
 .conn-dot.simulating{background:var(--cyan);box-shadow:0 0 8px var(--cyan);animation:blink 1.5s infinite;}
 @keyframes blink{0%,100%{opacity:1;}50%{opacity:.2;}}
-.conn-text{font-size:12px;font-family:'JetBrains Mono',monospace;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.conn-text{font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--muted);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .conn-count{background:var(--surface);border-radius:8px;padding:3px 9px;font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--muted);white-space:nowrap;flex-shrink:0;}
-.conn-right{display:flex;gap:6px;flex-shrink:0;flex-wrap:wrap;}
-.cbtn{padding:6px 12px;border-radius:14px;border:1.5px solid;cursor:pointer;font-family:'Poppins',sans-serif;font-size:11px;font-weight:700;transition:.2s;min-height:30px;white-space:nowrap;}
+/* Baris 2: tombol */
+.conn-btns{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:6px;}
+.cbtn{padding:9px 4px;border-radius:10px;border:1.5px solid;cursor:pointer;font-family:'Poppins',sans-serif;font-size:10px;font-weight:700;transition:.2s;min-height:38px;white-space:nowrap;text-align:center;display:flex;align-items:center;justify-content:center;gap:3px;flex-direction:column;line-height:1.2;}
+.cbtn .cbtn-icon{font-size:14px;line-height:1;}
+.cbtn .cbtn-lbl{font-size:9px;letter-spacing:.3px;}
 .cbtn-on{border-color:var(--ok);color:var(--ok);background:rgba(0,255,136,.06);}
 .cbtn-off{border-color:var(--danger);color:var(--danger);background:rgba(255,77,77,.06);}
 .cbtn-uji{border-color:var(--warn);color:var(--warn);background:rgba(255,204,0,.06);}
+@media(min-width:500px){
+  .conn-bar{display:flex;align-items:center;gap:12px;padding:11px 16px;}
+  .conn-top{margin-bottom:0;flex:1;min-width:0;}
+  .conn-btns{display:flex;gap:6px;flex-shrink:0;}
+  .cbtn{flex-direction:row;padding:7px 11px;min-height:34px;font-size:11px;}
+  .cbtn .cbtn-icon{font-size:12px;}
+  .cbtn .cbtn-lbl{font-size:11px;letter-spacing:0;}
+}
 .cbtn:hover{opacity:.7;}
 
 /* ═══════════ API PANEL ═══════════ */
@@ -212,9 +225,9 @@ body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;ove
 .wa-card canvas{background:#060d1a;border-radius:10px;padding:8px;width:100%!important;}
 
 /* ═══════════ TUTORIAL — FULLSCREEN ═══════════ */
-#tutorialPage{position:fixed;inset:0;z-index:9999;background:var(--bg);overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;animation:tutIn .35s cubic-bezier(.32,1,.32,1);}
-@keyframes tutIn{from{opacity:0;transform:translateY(40px);}to{opacity:1;transform:translateY(0);}}
-.tut-header{display:flex;align-items:center;justify-content:space-between;padding:14px var(--px);background:rgba(8,14,28,.97);border-bottom:1px solid rgba(0,242,255,.1);position:sticky;top:0;z-index:10;backdrop-filter:blur(12px);}
+#tutorialPage{position:fixed;left:0;right:0;top:0;bottom:0;z-index:9999;background:var(--bg);overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;}
+
+.tut-header{display:flex;align-items:center;justify-content:space-between;padding:14px var(--px);background:#080e1c;border-bottom:1px solid rgba(0,242,255,.1);position:sticky;top:0;z-index:10;}
 .tut-header-left{display:flex;align-items:center;gap:12px;}
 .tut-title{font-family:'Syne',sans-serif;font-size:clamp(14px,4vw,18px);font-weight:800;color:var(--cyan);}
 .tut-mode-toggle{display:flex;gap:4px;background:var(--surface);border-radius:20px;padding:4px;}
@@ -346,7 +359,7 @@ body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;ove
 .endpoint-desc{font-size:12px;color:var(--muted);line-height:1.6;}
 
 /* ═══════════ POPUP ═══════════ */
-.popup-overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);display:flex;align-items:flex-end;justify-content:center;z-index:8000;animation:overlayIn .2s ease;backdrop-filter:blur(5px);}
+.popup-overlay{position:fixed;inset:0;background:rgba(0,0,0,.88);display:flex;align-items:flex-end;justify-content:center;z-index:99998;animation:overlayIn .2s ease;}
 @keyframes overlayIn{from{opacity:0;}to{opacity:1;}}
 @media(min-width:600px){.popup-overlay{align-items:center;padding:20px;}}
 .popup-box{background:#0d1829;width:100%;max-width:480px;border:1px solid rgba(255,77,77,.35);box-shadow:0 0 80px rgba(255,77,77,.18),0 30px 60px rgba(0,0,0,.7);overflow:hidden;border-radius:22px 22px 0 0;animation:sheetUp .35s cubic-bezier(.32,1,.32,1);}
@@ -384,7 +397,7 @@ body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;ove
 .pbtn-block:hover{background:rgba(255,77,77,.2);}
 
 /* ═══════════ TOAST ═══════════ */
-.toast-wrap{position:fixed;bottom:0;left:0;right:0;z-index:7000;padding:0 12px calc(14px + env(safe-area-inset-bottom));display:flex;flex-direction:column-reverse;gap:8px;pointer-events:none;}
+.toast-wrap{position:fixed;bottom:0;left:0;right:0;z-index:7500;padding:0 12px calc(14px + env(safe-area-inset-bottom));display:flex;flex-direction:column-reverse;gap:8px;pointer-events:none;}
 @media(min-width:600px){.toast-wrap{left:auto;right:20px;bottom:20px;width:320px;}}
 .toast{background:#0e1d30;border-radius:12px;padding:12px 14px;box-shadow:0 8px 28px rgba(0,0,0,.5);border-left:3px solid;display:flex;align-items:flex-start;gap:10px;animation:toastIn .3s ease;pointer-events:all;cursor:pointer;}
 @keyframes toastIn{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
@@ -413,17 +426,9 @@ body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;ove
   .marquee-inner{animation:none;}
 }
 /* ═══ POPUP FIX MOBILE ═══ */
-.popup-overlay{
-  position:fixed!important;inset:0!important;
-  background:rgba(0,0,0,.85)!important;
-  display:flex!important;align-items:flex-end!important;justify-content:center!important;
-  z-index:99999!important;
-  animation:overlayIn .2s ease;
-  touch-action:none;
-  -webkit-overflow-scrolling:touch;
-}
-@media(min-width:600px){.popup-overlay{align-items:center!important;padding:20px!important;}}
-.popup-box{touch-action:manipulation;-webkit-overflow-scrolling:touch;}
+.popup-overlay{position:fixed;left:0;right:0;top:0;bottom:0;background:rgba(0,0,0,.88);display:flex;align-items:flex-end;justify-content:center;z-index:99998;}
+@media(min-width:600px){.popup-overlay{align-items:center;padding:20px;}}
+.popup-box{touch-action:manipulation;}
 .pbtn-ok,.pbtn-block{touch-action:manipulation;-webkit-tap-highlight-color:transparent;cursor:pointer;}
 /* ═══ SIMULASI BUTTON ═══ */
 .cbtn-sim{border-color:#00f2ff;color:#00f2ff;background:rgba(0,242,255,.08);}
@@ -488,16 +493,16 @@ body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;ove
 
     <!-- CONNECTION BAR -->
     <div class="conn-bar">
-      <div class="conn-left">
+      <div class="conn-top">
         <div id="connDot" class="conn-dot"></div>
         <div id="connText" class="conn-text">Status: <b>Belum Terhubung</b></div>
         <div id="connCount" class="conn-count">0 pesan</div>
       </div>
-      <div class="conn-right">
-        <button class="cbtn cbtn-on"  onclick="connectAPI()">⚡ Hubungkan</button>
-        <button class="cbtn cbtn-off" onclick="disconnectAPI()">■ Putus</button>
-        <button class="cbtn cbtn-sim" id="simBtn" onclick="toggleSimMode()">🔄 Simulasi</button>
-        <button class="cbtn cbtn-uji" onclick="sendTest()">🧪 Uji</button>
+      <div class="conn-btns">
+        <button class="cbtn cbtn-on"  onclick="connectAPI()"><span class="cbtn-icon">⚡</span><span class="cbtn-lbl">Hubungkan</span></button>
+        <button class="cbtn cbtn-off" onclick="disconnectAPI()"><span class="cbtn-icon">■</span><span class="cbtn-lbl">Putus</span></button>
+        <button class="cbtn cbtn-sim" id="simBtn" onclick="toggleSimMode()"><span class="cbtn-icon">🔄</span><span class="cbtn-lbl">Simulasi</span></button>
+        <button class="cbtn cbtn-uji" onclick="sendTest()"><span class="cbtn-icon">🧪</span><span class="cbtn-lbl">Uji</span></button>
       </div>
     </div>
 
@@ -1447,9 +1452,12 @@ function showPopup({sender,body,score,status,keywords,riskLevel,timestamp}){
   const id="p"+Date.now();
   const t=timestamp?new Date(timestamp).toLocaleTimeString():new Date().toLocaleTimeString();
   const kw=(keywords||[]).slice(0,8).map(k=>`<span class="popup-kw">${esc(k)}</span>`).join("");
-  g("popupWrap").insertAdjacentHTML("beforeend",`
-  <div class="popup-overlay" id="${id}" onclick="closePopOut(event,'${id}')">
-    <div class="popup-box ${riskLevel}">
+  const _pEl=document.createElement('div');
+  _pEl.id=id;
+  _pEl.className='popup-overlay';
+  _pEl.style.cssText='position:fixed;left:0;top:0;width:100%;height:100%;z-index:99998;background:rgba(0,0,0,.88);display:flex;align-items:flex-end;justify-content:center;';
+  _pEl.addEventListener('click',e=>{if(e.target===_pEl)closePop(id);});
+  _pEl.innerHTML=`<div class="popup-box ${riskLevel}">
       <span class="popup-handle"></span>
       <div class="popup-head">
         <div class="popup-head-row">
@@ -1475,8 +1483,8 @@ function showPopup({sender,body,score,status,keywords,riskLevel,timestamp}){
           <button class="pbtn-block" onclick="blockSender('${id}','${esc(sender)}')">🚫 Blokir</button>
         </div>
       </div>
-    </div>
-  </div>`);
+    </div>`;
+  document.body.appendChild(_pEl);
 }
 function closePop(id){const el=g(id);if(el){el.style.opacity="0";el.style.transition="opacity .2s";setTimeout(()=>el.remove(),200);}}
 function closePopOut(e,id){if(e.target.id===id)closePop(id);}
